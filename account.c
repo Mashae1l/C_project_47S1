@@ -7,7 +7,7 @@
 Account* loadAccounts(const char *filename){
    //-------------
    //open the file
-   File *fp=fopen(filename,"r+");
+   FILE *fp=fopen(filename,"r+");
    //check
    if (fp == NULL) {
       printf("Sorry, Can't open accounts file\n");
@@ -42,7 +42,7 @@ Account* loadAccounts(const char *filename){
 //==========================================
 //save Accounts method
 void saveAccounts(Account *head, const char *filename){
-   File *fp=fopen(filename,"w");
+   FILE *fp=fopen(filename,"w");
    //check
    if (fp == NULL) {
       printf("Sorry, Can't save the file\n");
@@ -50,7 +50,7 @@ void saveAccounts(Account *head, const char *filename){
      
    Account *curr = head;
    char temp[20];
-   while (curr) {
+   while (curr !=NULL) {
       strcpy(temp, curr->password);
       encryptPassword(temp);
       fprintf(fp, "%d %s %d %s %d\n", curr->accountID, curr->username, curr->age, temp, curr->isAdmin);
@@ -71,7 +71,7 @@ Account* registerAccount(Account *head, char *username, int age, char *password)
    Account *curr = head;
    int count=0;//for the ID
    while (curr != NULL) {
-      if (strcmp(check->username, username) == 0) {//If a matching username is found, do not register the account
+      if (strcmp(curr->username, username) == 0) {//If a matching username is found, do not register the account
          printf("Username already exists, Please choose another one\n");
          return head;}
       count++;
